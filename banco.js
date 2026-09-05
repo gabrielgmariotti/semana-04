@@ -9,6 +9,6 @@ db.exec("INSERT INTO clientes (nome, telefone, ultima_compra) VALUES ('Ana Lima'
 const todos = db.prepare("SELECT * FROM clientes").all();
 console.log(todos);
 
-const sumidos = db.prepare("SELECT * FROM clientes WHERE ultima_compra < '2026-05-11").all();
+const sumidos = db.prepare("SELECT * FROM clientes WHERE ultima_compra < '2026-05-11'").all();
 console.log("=== CLIENTES SUMIDOS ===");
 console.log (sumidos);

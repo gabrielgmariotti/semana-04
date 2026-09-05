@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <title>Mini-CRM</title>
+    </head>
+    <body>
+        <h1>Mini-CRM</h1>
+
+        <button onclick="carregar()">Todos os clientes</button>
+        <button onclick="sumidos()">Quem sumiu?</button>
+
+        <p id="lista" style="white-space: pre-line"></p>
+        <script>
+            async function carregar() {
+                const resposta = await fetch("/clientes");
+                const clientes = await resposta.json();
+
+                let texto = "";
+                for (const c of clientes) {
+                    texto = texto + "• " + c.nome + " - " + c.telefone + " - ultima compra: " + c.ultima_compra + "\n";
+                }
+                document.getElementById("lista").textContent = texto;
+            } 
+                async function sumidos() {
+                    const resposta = await fetch("/sumidos");
+                     const clientes = await resposta.json();
+
+                     let texto = "";
+                     for(const c of clientes) {
+                        texto = texto + "• " + c.nome + " — " + c.telefone + " — sumido desde: " + c.ultima_compra + "\n";
+                     }
+                     document.getElementById("lista").textContent = texto;
+            }
+    </script>
+</body>
+</html>
