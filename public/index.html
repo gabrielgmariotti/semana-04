@@ -9,6 +9,11 @@
 
         <button onclick="carregar()">Todos os clientes</button>
         <button onclick="sumidos()">Quem sumiu?</button>
+        <h2>Cadastrar clientes</h2>
+        <input type="text" id="nome" placeholder="Nome">
+        <input type="text" id="telefone" placeholder="Telefone">
+        <input type="date" id="ultima_compra">
+        <button onclick="cadastrar()">Cadastrar</button>
 
         <p id="lista" style="white-space: pre-line"></p>
         <script>
@@ -31,7 +36,20 @@
                         texto = texto + "• " + c.nome + " — " + c.telefone + " — sumido desde: " + c.ultima_compra + "\n";
                      }
                      document.getElementById("lista").textContent = texto;
-            }
+                    }
+                async function cadastrar() {
+                    const nome = document.getElementById("nome").value;
+                    const telefone = document.getElementById("telefone").value;
+                    const ultima_compra = document.getElementById("ultima_compra").value;
+
+                    await fetch("/clientes", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ nome, telefone, ultima_compra })
+                    });
+                    
+                    carregar();
+                }
     </script>
 </body>
 </html>

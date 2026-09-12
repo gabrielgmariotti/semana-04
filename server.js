@@ -4,6 +4,7 @@ const db = new DatabaseSync("Clientes.db");
 const express = require("express");
 const app = express();
 app.use(express.static("public"));
+app.use(express.json());
 
 app.get("/clientes", (req, res) => {
     const todos = db.prepare("SELECT * FROM clientes").all();
@@ -14,6 +15,14 @@ app.get("/sumidos", (req, res) => {
     const sumidos = db.prepare("SELECT * FROM clientes WHERE ultima_compra < '2026-05-11'").all();
     res.json(sumidos);
 })
+app.post("/clientes", (req, res) => {
+    const { nome, telefone, ultima_compra } = req.body;
+
+    db.prepare("INSERT INTO clientes (nome, telefone, ultima_compra) VALUES (?, ?, ?)")
+      .run(nome, telefone, ultima_compra);
+
+    res.json({ ok: true });
+});
 
 app.listen(3000);
 console.log("Servidor rodando em http://localhost:3000");
