@@ -27,16 +27,24 @@
                 }
                 document.getElementById("lista").textContent = texto;
             } 
-                async function sumidos() {
+                async function sumidos(){
                     const resposta = await fetch("/sumidos");
-                     const clientes = await resposta.json();
+                    const clientes = await resposta.json();
 
-                     let texto = "";
-                     for(const c of clientes) {
-                        texto = texto + "• " + c.nome + " — " + c.telefone + " — sumido desde: " + c.ultima_compra + "\n";
-                     }
-                     document.getElementById("lista").textContent = texto;
-                    }
+                    const lista = document.getElementById("lista");
+                    lista.textContent = "";
+                    for (const c of clientes) { const numero = "55" + c.telefone.replace(/\D/g, "");
+        const texto = "Oi " + c.nome + "! Aqui é da Loja Teste. Faz um tempo que você não aparece — separei umas novidades que têm a ver com você. Posso te mostrar?";
+
+        const link = document.createElement("a");
+        link.href = "https://wa.me/" + numero + "?text=" + encodeURIComponent(texto);
+        link.target = "_blank";
+        link.textContent = "Chamar " + c.nome + " no WhatsApp — sumido desde " + c.ultima_compra;
+
+        lista.appendChild(link);
+        lista.appendChild(document.createElement("br"));
+    }
+                } 
                 async function cadastrar() {
                     const nome = document.getElementById("nome").value;
                     const telefone = document.getElementById("telefone").value;
